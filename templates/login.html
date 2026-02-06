@@ -6,6 +6,12 @@
 </head>
 <body>
   <h2> Left Pawed Cats' Support Club Web Page Login</h2>
+  <figure>
+  <img src="{{ url_for('static', filename='polydactylcat.jpg') }}" alt="Polydactyl cat" style="max-width:300px;">
+  <figcaption>
+    Photo: Marc Averette / Wikimedia Commons (CC BY 3.0) — https://commons.wikimedia.org/wiki/File:Polydactylcat.jpg — https://creativecommons.org/licenses/by/3.0/
+  </figcaption>
+</figure>  
   <form action="/login" method="post">
     <label>Username: <input name="username" required></label><br>
     <label>Password: <input name="password" type="password" required></label><br>
