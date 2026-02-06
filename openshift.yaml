@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insecure-login
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: insecure-login
+  template:
+    metadata:
+      labels:
+        app: insecure-login
+    spec:
+      containers:
+      - name: app
+        # If Rahti builds the image, it will replace the image reference. Leave placeholder or set if using registry.
+        image: image-registry.openshift-image-registry.svc:5000/<project>/insecure-login:latest
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: insecure-login
+spec:
+  selector:
+    app: insecure-login
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: insecure-login
+spec:
+  to:
+    kind: Service
+    name: insecure-login
+  port:
+    targetPort: 80
+# No "tls:" block — route will be plain HTTP (insecure by design)
